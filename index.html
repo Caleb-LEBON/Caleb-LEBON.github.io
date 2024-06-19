@@ -6,27 +6,86 @@
     <link rel="stylesheet" href="CSS/styles.css">
     <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
     <title>UB Alerts</title>
+    <style>
+        .slideshow-container {
+            position: relative;
+            max-width: 100%;
+            margin: auto;
+        }
+        .slide {
+            display: none;
+        }
+        .prev, .next {
+            position: absolute;
+            top: 50%;
+            width: auto;
+            margin-top: -22px;
+            padding: 16px;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        .prev {
+            left: 0;
+        }
+        .next {
+            right: 0;
+        }
+        form {
+            position: absolute;
+            top: 20%;
+            right: 10%;
+            background-color: #f2f2f2;
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
     <nav>
         <div class="logo">
             <h1>UB <span>Alerts</span></h1>
         </div>
-        <ul class="menu-center">
-            <li><a href="#">Accueil</a></li>
-            <li><a href="#">Aujourd'hui</a></li>
-            <li><a href="#">Cette Semaine</a></li>
-            <li><a href="#">À Propos</a></li>
+            <ul class="menu-center">
+                <li><a href="#">Accueil</a></li>
+                <li><a href="#">Aujourd'hui</a></li>
+                <li><a href="#">Cette Semaine</a></li>
+                <li><a href="#">À Propos</a></li>
+                <div class="search-form">
+                    <form action="#" method="get">
+                        <input type="text" placeholder="Rechercher...">
+                        <button type="submit"><i class="fas fa-search"></i></button>
+                    </form>
+                </div>
         </ul>
         <div class="account">
             <button>Mon Compte</button>
         </div>
-        <div class="search-form">
-            <form action="#" method="get">
-                <input type="text" placeholder="Rechercher...">
-                <button type="submit"><i class="fas fa-search"></i></button>
-            </form>
-        </div>
     </nav>
+
+    <div class="slideshow-container">
+        <div class="slide fade">
+            <img src="https://example.com/image1.jpg" alt="Image 1">
+        </div>
+        <div class="slide fade">
+            <img src="https://example.com/image2.jpg" alt="Image 2">
+        </div>
+        <div class="slide fade">
+            <img src="https://example.com/image3.jpg" alt="Image 3">
+        </div>
+        <!-- Ajoutez les autres images similaires ici -->
+    
+        <button class="prev" onclick="plusSlides(-1)">&#10094;</button>
+        <button class="next" onclick="plusSlides(1)">&#10095;</button>
+    </div>
+    
+    <form class="login-form">
+        <h2>Connexion</h2>
+        <label for="username">Nom d'utilisateur:</label><br>
+        <input type="text" id="username" name="username"><br>
+        <label for="password">Mot de passe:</label><br>
+        <input type="password" id="password" name="password"><br><br>
+        <input type="submit" value="Se connecter">
+    </form>
 </body>
 </html>

@@ -69,3 +69,41 @@ button {
     border: none;
     border-radius: 20px;
 }
+
+.slideshow-container {
+    position: relative;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.slide {
+    display: none;
+}
+
+.login-form {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-form form {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-form input {
+    margin-bottom: 10px;
+    padding: 8px;
+}
+
+.login-form button {
+    padding: 10px;
+    background-color: #233d73;
+    color: white;
+    border: none;
+    border-radius: 20px;
+}
