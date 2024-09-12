@@ -1,116 +1,168 @@
-<!doctype html>  
-<html lang="fr">  
+<html><head><base href="https://weathersms.admin.gov"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Système d'Alerte Météorologique SMS - Interface Administrateur</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f4;
+  }
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+  h1 {
+    color: #333;
+    text-align: center;
+  }
+  .dashboard {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  .panel {
+    flex: 1;
+    margin: 0 10px;
+    padding: 20px;
+    background-color: #e9ecef;
+    border-radius: 5px;
+  }
+  .panel h2 {
+    color: #007bff;
+    margin-top: 0;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  input, select, textarea {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  button {
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  button:hover {
+    background-color: #0056b3;
+  }
+  #alertList {
+    list-style-type: none;
+    padding: 0;
+  }
+  #alertList li {
+    background-color: #fff;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  #map {
+    height: 300px;
+    margin-top: 20px;
+    border-radius: 4px;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>Système d'Alerte Météorologique SMS - Interface Administrateur</h1>
+    
+    <div class="dashboard">
+      <div class="panel">
+        <h2>Créer une Alerte</h2>
+        <form id="alertForm">
+          <select id="alertType" required>
+            <option value="">Sélectionner le type d'alerte</option>
+            <option value="tempete">Tempête</option>
+            <option value="inondation">Inondation</option>
+            <option value="canicule">Canicule</option>
+            <option value="neige">Neige</option>
+          </select>
+          <input type="text" id="location" placeholder="Localisation" required>
+          <textarea id="message" placeholder="Message d'alerte" required></textarea>
+          <button type="submit">Envoyer l'Alerte</button>
+        </form>
+      </div>
+      
+      <div class="panel">
+        <h2>Alertes Actives</h2>
+        <ul id="alertList"></ul>
+      </div>
+      
+      <div class="panel">
+        <h2>Statistiques</h2>
+        <p>Nombre total d'alertes envoyées : <span id="totalAlerts">0</span></p>
+        <p>Nombre de destinataires : <span id="totalRecipients">0</span></p>
+        <p>Taux de réception : <span id="deliveryRate">0%</span></p>
+      </div>
+    </div>
+    
+    <div id="map"></div>
+  </div>
 
-<head>  
-    <meta charset="utf-8">  
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">  
-    <title>UB Alerts</title>  
-    <link rel="icon" href="img/favicon.png">  
-    <link rel="stylesheet" href="css/bootstrap.min.css">  
-    <link rel="stylesheet" href="css/animate.css">  
-    <link rel="stylesheet" href="css/owl.carousel.min.css">  
-    <link rel="stylesheet" href="css/all.css">  
-    <link rel="stylesheet" href="css/flaticon.css">  
-    <link rel="stylesheet" href="css/themify-icons.css">  
-    <link rel="stylesheet" href="css/magnific-popup.css">  
-    <link rel="stylesheet" href="css/slick.css">  
-    <link rel="stylesheet" href="css/style.css">  
-</head>  
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  
+  <script>
+    // Initialisation de la carte
+    const map = L.map('map').setView([46.603354, 1.888334], 6); // Centre de la France
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
 
-<body>  
-    <header class="main_menu home_menu">  
-        <div class="container">  
-            <div class="row align-items-center">  
-                <div class="col-lg-12">  
-                    <nav class="navbar navbar-expand-lg navbar-light">  
-                        <a class="navbar-brand" href="index.html"><img src="img/logo.png" alt="logo"></a>  
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">  
-                            <span class="menu_icon"><i class="fas fa-bars"></i></span>  
-                        </button>  
-
-                        <div class="collapse navbar-collapse main-menu-item" id="navbarSupportedContent">  
-                            <ul class="navbar-nav">  
-                                <li class="nav-item">  
-                                    <a class="nav-link" href="index.html">Accueil</a>  
-                                </li>  
-                                <li class="nav-item dropdown">  
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown_1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menus</a>  
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown_1">  
-                                        <a class="dropdown-item" href="login.html#compte">Créer un compte</a>  
-                                        <a class="dropdown-item" href="admin.html">Admin</a>  
-                                    </div>  
-                                </li>  
-                                <li class="nav-item dropdown">  
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown_2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Contact</a>  
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown_2">  
-                                        <a href="tel:+243977334298" class="dropdown-item">Téléphone</a>  
-                                        <a href="mailto:lebonethiole12345@gmail.com" class="dropdown-item">Mail</a>  
-                                    </div>  
-                                </li>  
-                            </ul>  
-                        </div>  
-                    </nav>  
-                </div>  
-            </div>  
-        </div>  
-    </header>  
-
-    <section class="login_part padding_top">  
-        <div class="container">  
-            <div class="row align-items-center">  
-                <div class="col-lg-6 col-md-6">  
-                    <div class="login_part_text text-center">  
-                        <div class="login_part_text_iner">  
-                            <h2>Bienvenue cher(e) Administrateur(trice)</h2>  
-                            <p>Si vous ne pouvez pas vous connecter, veuillez contacter le QG.</p>  
-                            <a href="tel:+243977334298" class="btn_3">Appellez le QG</a>  
-                        </div>  
-                    </div>  
-                </div>  
-                <div class="col-lg-6 col-md-6">  
-                    <div class="login_part_form">  
-                        <div class="login_part_form_iner">  
-                            <h3 id="compte">Connectez-vous à UBAlerts</h3>  
-                            <form class="row contact_form" action="#" method="post" novalidate="novalidate">  
-                                <div class="col-md-12 form-group p_star">  
-                                    <input type="text" class="form-control" id="admin_name" name="admin_name" placeholder="Nom Admin" required aria-label="Nom Admin">  
-                                </div>  
-                                <div class="col-md-12 form-group p_star">  
-                                    <input type="password" class="form-control" id="admin_password" name="admin_password" placeholder="Mot de passe" required aria-label="Mot de passe">  
-                                </div>  
-                                <div class="col-md-12 form-group">  
-                                    <button type="submit" class="btn_3">Connexion</button>  
-                                </div>  
-                            </form>  
-                        </div>  
-                    </div>  
-                </div>  
-            </div>  
-        </div>  
-    </section>
-
-    <footer class="footer_part">  
-        <div class="copyright_part">  
-            <div class="container">  
-                <div class="row">  
-                    <div class="col-lg-8">  
-                        <div class="copyright_text">  
-                            <p id="contact">Copyright &copy;<script>document.write(new Date().getFullYear());</script> <a href="#">Caleb LeBon ASHUZA MUHIGIRWA</a></p>  
-                        </div>  
-                    </div>  
-                    <div class="col-lg-4">  
-                        <div class="footer_icon social_icon">  
-                            <ul class="list-unstyled">  
-                                <li><a href="#" class="single_social_icon"><i class="fab fa-facebook-f"></i></a></li>  
-                                <li><a href="#" class="single_social_icon"><i class="fab fa-twitter"></i></a></li>  
-                                <li><a href="#" class="single_social_icon"><i class="fas fa-globe"></i></a></li>  
-                                <li><a href="#" class="single_social_icon"><i class="fab fa-behance"></i></a></li>  
-                            </ul>  
-                        </div>  
-                    </div>  
-                </div>  
-            </div>  
-        </div>  
-    </footer>  
-
-    <script
+    let alerts = [];
+    let totalRecipients = 1000000; // Exemple de nombre de destinataires
+    
+    document.getElementById('alertForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const type = document.getElementById('alertType').value;
+      const location = document.getElementById('location').value;
+      const message = document.getElementById('message').value;
+      
+      // Ajout de l'alerte à la liste
+      alerts.push({ type, location, message });
+      updateAlertList();
+      updateStats();
+      
+      // Ajout d'un marqueur sur la carte (coordonnées aléatoires pour l'exemple)
+      const lat = 43 + Math.random() * 8;
+      const lng = -1 + Math.random() * 10;
+      L.marker([lat, lng]).addTo(map)
+        .bindPopup(`${type.toUpperCase()} - ${location}<br>${message}`)
+        .openPopup();
+      
+      // Réinitialisation du formulaire
+      this.reset();
+    });
+    
+    function updateAlertList() {
+      const list = document.getElementById('alertList');
+      list.innerHTML = '';
+      alerts.forEach(alert => {
+        const li = document.createElement('li');
+        li.textContent = `${alert.type.toUpperCase()} - ${alert.location}: ${alert.message}`;
+        list.appendChild(li);
+      });
+    }
+    
+    function updateStats() {
+      document.getElementById('totalAlerts').textContent = alerts.length;
+      document.getElementById('totalRecipients').textContent = totalRecipients.toLocaleString();
+      const deliveryRate = (Math.random() * 10 + 90).toFixed(2); // Taux de réception aléatoire entre 90% et 100%
+      document.getElementById('deliveryRate').textContent = deliveryRate + '%';
+    }
+  </script>
+</body>
+</html>
