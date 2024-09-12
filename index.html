@@ -1,112 +1,194 @@
-<html><head><base href="https://alertemeteo.fr/">
+<html><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Système d'Alerte Météorologique par SMS</title>
+<title>UBAlerts - Accueil</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-  body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    color: #333;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f0f8ff;
-  }
-  h1 {
-    color: #0066cc;
-    text-align: center;
-  }
-  .container {
-    background-color: white;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  }
-  .form-group {
-    margin-bottom: 20px;
-  }
-  label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  input[type="tel"], select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
-  button {
-    background-color: #0066cc;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  button:hover {
-    background-color: #0052a3;
-  }
-  #confirmation {
-    display: none;
-    margin-top: 20px;
-    padding: 10px;
-    background-color: #d4edda;
-    border: 1px solid #c3e6cb;
-    border-radius: 5px;
-    color: #155724;
-  }
+    :root {
+        --primary-color: #3498db;
+        --secondary-color: #2c3e50;
+        --accent-color: #f39c12;
+        --text-color: #333;
+        --bg-color: #f4f4f4;
+    }
+    body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        font-family: 'Poppins', sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 810" preserveAspectRatio="xMidYMid slice"><path fill="%23f4f4f4" d="M0 0h1440v810H0z"/><g fill="%23ffffff" fill-opacity="0.7"><circle cx="1395" cy="140" r="3"/><circle cx="1145" cy="95" r="3"/><circle cx="920" cy="175" r="3"/><circle cx="690" cy="120" r="3"/><circle cx="455" cy="90" r="3"/><circle cx="230" cy="180" r="3"/><circle cx="10" cy="140" r="3"/><circle cx="1370" cy="270" r="3"/><circle cx="1125" cy="320" r="3"/><circle cx="895" cy="290" r="3"/><circle cx="670" cy="350" r="3"/><circle cx="435" cy="310" r="3"/><circle cx="210" cy="280" r="3"/><circle cx="35" cy="340" r="3"/><circle cx="1390" cy="460" r="3"/><circle cx="1155" cy="510" r="3"/><circle cx="930" cy="480" r="3"/><circle cx="705" cy="540" r="3"/><circle cx="470" cy="500" r="3"/><circle cx="245" cy="470" r="3"/><circle cx="20" cy="530" r="3"/><circle cx="1405" cy="650" r="3"/><circle cx="1170" cy="700" r="3"/><circle cx="945" cy="670" r="3"/><circle cx="720" cy="730" r="3"/><circle cx="485" cy="690" r="3"/><circle cx="260" cy="660" r="3"/><circle cx="35" cy="720" r="3"/></g></svg>');
+        background-attachment: fixed;
+        background-size: cover;
+    }
+    #app {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+    .content {
+        flex-grow: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+    nav {
+        background-color: var(--secondary-color);
+        padding: 15px 0;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    nav ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+    }
+    nav ul li {
+        margin: 0 20px;
+    }
+    nav ul li a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+        display: flex;
+        align-items: center;
+    }
+    nav ul li a:hover {
+        color: var(--accent-color);
+    }
+    nav ul li a i {
+        margin-right: 8px;
+        font-size: 1.2em;
+    }
+    .logo {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .logo svg {
+        width: 150px;
+        height: auto;
+    }
+    h1 {
+        color: var(--primary-color);
+        font-size: 1.8em;
+        margin-bottom: 20px;
+        font-weight: 500;
+    }
+    p {
+        font-size: 1em;
+        line-height: 1.6;
+        margin-bottom: 20px;
+    }
+    .main-container {
+        display: flex;
+        justify-content: space-between;
+        max-width: 1000px;
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+    .info-section, .signup-section {
+        padding: 40px;
+        width: 50%;
+    }
+    .signup-section {
+        background-color: var(--primary-color);
+        color: white;
+        border-radius: 0 30px 30px 0;
+    }
+    .signup-form input {
+        width: 100%;
+        padding: 15px;
+        margin-bottom: 20px;
+        border: none;
+        border-radius: 25px;
+        font-family: 'Poppins', sans-serif;
+        font-size: 1em;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease;
+    }
+    .signup-form input:focus {
+        outline: none;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    }
+    .signup-button {
+        background-color: var(--accent-color);
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        border-radius: 25px;
+        font-size: 1em;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: 'Poppins', sans-serif;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .signup-button:hover {
+        background-color: #e67e22;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    }
 </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Système d'Alerte Météorologique par SMS</h1>
-    <form id="alertForm">
-      <div class="form-group">
-        <label for="phone">Numéro de téléphone :</label>
-        <input type="tel" id="phone" name="phone" required placeholder="Ex: 06XXXXXXXX">
-      </div>
-      <div class="form-group">
-        <label for="location">Localisation :</label>
-        <select id="location" name="location" required>
-          <option value="">Sélectionnez votre région</option>
-          <option value="ile-de-france">Île-de-France</option>
-          <option value="auvergne-rhone-alpes">Auvergne-Rhône-Alpes</option>
-          <option value="provence-alpes-cote-dazur">Provence-Alpes-Côte d'Azur</option>
-          <option value="occitanie">Occitanie</option>
-          <option value="nouvelle-aquitaine">Nouvelle-Aquitaine</option>
-          <!-- Ajoutez d'autres régions ici -->
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="alertType">Type d'alerte :</label>
-        <select id="alertType" name="alertType" required multiple>
-          <option value="pluie">Pluie intense</option>
-          <option value="orage">Orage</option>
-          <option value="neige">Neige</option>
-          <option value="canicule">Canicule</option>
-          <option value="vent">Vent violent</option>
-          <option value="inondation">Inondation</option>
-        </select>
-      </div>
-      <button type="submit">S'inscrire aux alertes</button>
-    </form>
-    <div id="confirmation">Inscription réussie ! Vous recevrez désormais des alertes météorologiques par SMS.</div>
-  </div>
+    <div id="app">
+        <nav>
+                <ul>  
+                    <li><a href="index.html"><i class="fas fa-home"></i> Accueil</a></li>  
+                    <li><a href="connexion_admin.html"><i class="fas fa-user-shield"></i> Admin</a></li>  
+                    <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>  
+                </ul>  
+        </nav>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script>
-    $(document).ready(function() {
-      $('#alertForm').on('submit', function(e) {
-        e.preventDefault();
-        
-        // Simuler l'envoi des données au serveur
-        setTimeout(function() {
-          $('#confirmation').slideDown();
-          $('#alertForm')[0].reset();
-        }, 1000);
-      });
-    });
-  </script>
-</body></html>
+        <div class="content">
+            <div class="main-container">
+                <div class="info-section">
+                    <div class="logo">
+                        <svg viewBox="0 0 300 100">
+                            <defs>
+                                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" style="stop-color:#3498db;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#2c3e50;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                            <text x="10" y="80" font-family="Poppins, sans-serif" font-size="60" fill="url(#gradient)" font-weight="700">
+                                UBAlerts
+                            </text>
+                            <path d="M260 30 L275 30 L267.5 45 Z" fill="#f39c12" />
+                        </svg>
+                    </div>
+
+                    <h1>Bienvenue sur UBAlerts</h1>
+                    <p>
+                        UBAlerts est votre solution intelligente pour rester informé en temps réel.
+                        Recevez des alertes personnalisées sur les sujets qui vous intéressent,
+                        où que vous soyez, quand vous le souhaitez.
+                    </p>
+                    <p>
+                        <i class="fas fa-bell"></i> Alertes personnalisées<br>
+                        <i class="fas fa-clock"></i> Informations en temps réel<br>
+                        <i class="fas fa-mobile-alt"></i> Compatible multi-plateformes
+                    </p>
+                </div>
+                <div class="signup-section">
+                    <h2>Inscrivez-vous maintenant</h2>
+                    <form class="signup-form">
+                        <input type="text" placeholder="Nom" required>
+                        <input type="tel" placeholder="Numéro de téléphone" required>
+                        <input type="password" placeholder="Mot de passe" required>
+                        <button type="submit" class="signup-button">S'inscrire</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
