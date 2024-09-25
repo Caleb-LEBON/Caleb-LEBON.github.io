@@ -133,9 +133,7 @@
     <div id="app">
         <nav>
             <ul>
-                <li><a href="../index.html"><i class="fas fa-home"></i> Accueil</a></li>
-                <li><a href="connexion_admin.html"><i class="fas fa-user-shield"></i> Admin</a></li>
-                <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+                <li><a href="../index.php"><i class="fas fa-home"></i> Accueil</a></li>
             </ul>
         </nav>
 
@@ -157,14 +155,23 @@
                 </div>
 
                 <h1>Connexion Admin</h1>
+                <?php  
+                if (isset($_GET['error'])) {  
+                    echo '<p style="color:red;">Mot de passe incorrect. Veuillez réessayer.</p>';  
+                }  
+            ?>  
+           <form id="admin-login-form" method="POST" action="process_login.php">  
+    <div class="input-group">  
+        <label for="nom">Nom</label>  
+        <input type="text" id="nom" name="nom" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 20px; font-size: 16px; transition: border-color 0.3s ease;">  
+    </div>  
+    <div class="input-group">  
+        <label for="password">Mot de passe</label>  
+        <input type="password" id="password" name="password" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 20px; font-size: 16px; transition: border-color 0.3s ease;">  
+    </div>  
+    <button type="submit">Se connecter</button>  
+</form>
 
-                <form id="admin-login-form">
-                    <div class="input-group">
-                        <label for="password">Mot de passe</label>
-                        <input type="password" id="password" name="password" required>
-                    </div>
-                    <button type="submit">Se connecter</button>
-                </form>
             </div>
         </div>
     </div>
@@ -173,12 +180,10 @@
     document.getElementById('admin-login-form').addEventListener('submit', function(e) {
         e.preventDefault();
         const password = document.getElementById('password').value;
-        
-        // Ici, vous devriez normalement envoyer le mot de passe à un serveur pour vérification
-        // Pour cet exemple, nous utilisons un mot de passe en dur (ce qui n'est pas sécurisé en production)
-        if (password === 'adminUB2023') {
+
+        if (password === '@elite00') {
             // Redirection vers le panneau d'administration
-            window.location.href = '/admin/dashboard';
+            window.location.href = 'admin.php';
         } else {
             alert('Mot de passe incorrect. Veuillez réessayer.');
         }

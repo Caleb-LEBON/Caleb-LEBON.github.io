@@ -129,7 +129,9 @@
         cursor: pointer;
         transition: all 0.3s ease;
         font-family: 'Poppins', sans-serif;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+        text-decoration: none;  
+
     }
     .signup-button:hover {
         background-color: #e67e22;
@@ -141,11 +143,11 @@
 <body>
     <div id="app">
         <nav>
-                <ul>  
-                    <li><a href="index.html"><i class="fas fa-home"></i> Accueil</a></li>  
-                    <li><a href="Adds/connexion_admin.html"><i class="fas fa-user-shield"></i> Admin</a></li>  
-                    <li><a href="Adds/contact.html"><i class="fas fa-envelope"></i> Contact</a></li>  
-                </ul>  
+        <ul>  
+            <li><a href="index.php"><i class="fas fa-home"></i> Accueil</a></li>  
+            <li><a href="Adds/connexion_admin.php"><i class="fas fa-user-shield"></i> Admin</a></li>  
+        </ul>
+
         </nav>
 
         <div class="content">
@@ -175,16 +177,18 @@
                     <p>
                         <i class="fas fa-bell"></i> Alertes personnalisées<br>
                         <i class="fas fa-clock"></i> Informations en temps réel<br>
-                        <i class="fas fa-mobile-alt"></i> Compatible multi-plateformes
+                        <i class="fas fa-mobile-alt"></i> Compatible multi-plateformes<br>
+                        <br>
+                        <a href="Adds/main.php" class="signup-button">Consultez la météo</a>
                     </p>
                 </div>
                 <div class="signup-section">
+                    <br><br>
                     <h2>Inscrivez-vous maintenant</h2>
-                    <form class="signup-form">
-                        <input type="text" placeholder="Nom" required>
-                        <input type="tel" placeholder="Numéro de téléphone" required>
-                        <input type="password" placeholder="Mot de passe" required>
-                        <button type="submit" class="signup-button">S'inscrire</button>
+                    <form class="signup-form" action="BD/submit.php" method="post">  
+                        <input type="text" name="nom" placeholder="Nom" required>  
+                        <input type="tel" name="telephone" placeholder="Numéro de téléphone" required>  
+                        <button type="submit" class="signup-button">S'inscrire</button>  
                     </form>
                 </div>
             </div>

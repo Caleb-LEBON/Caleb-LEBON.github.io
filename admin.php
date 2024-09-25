@@ -148,9 +148,8 @@
     <div id="app">
         <nav>
             <ul>
-                <li><a href="../index.html"><i class="fas fa-home"></i> Accueil</a></li>
-                <li><a href="connexion_admin.html"><i class="fas fa-user-shield"></i> Admin</a></li>
-                <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+                <li><a href="../main.php"><i class="fas fa-home"></i> Météo</a></li>
+                <li><a href="../index.php"><i class="fas fa-user-shield"></i> Deconnexion</a></li>
             </ul>
         </nav>
 
