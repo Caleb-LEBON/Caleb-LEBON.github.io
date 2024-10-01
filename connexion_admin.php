@@ -133,7 +133,7 @@
     <div id="app">
         <nav>
             <ul>
-                <li><a href="../index.php"><i class="fas fa-home"></i> Accueil</a></li>
+                <li><a href="index.php"><i class="fas fa-home"></i> Accueil</a></li>
             </ul>
         </nav>
 
@@ -160,18 +160,17 @@
                     echo '<p style="color:red;">Mot de passe incorrect. Veuillez réessayer.</p>';  
                 }  
             ?>  
-           <form id="admin-login-form" method="POST" action="process_login.php">  
-    <div class="input-group">  
-        <label for="nom">Nom</label>  
-        <input type="text" id="nom" name="nom" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 20px; font-size: 16px; transition: border-color 0.3s ease;">  
-    </div>  
-    <div class="input-group">  
-        <label for="password">Mot de passe</label>  
-        <input type="password" id="password" name="password" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 20px; font-size: 16px; transition: border-color 0.3s ease;">  
-    </div>  
-    <button type="submit">Se connecter</button>  
-</form>
-
+                <form id="admin-login-form" method="POST" action="process_login.php">  
+                    <div class="input-group">  
+                        <label for="nom">Nom</label>  
+                        <input type="text" id="nom" name="nom" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 20px; font-size: 16px; transition: border-color 0.3s ease;">  
+                    </div>  
+                    <div class="input-group">  
+                        <label for="password">Mot de passe</label>  
+                        <input type="password" id="password" name="password" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 20px; font-size: 16px; transition: border-color 0.3s ease;">  
+                    </div>  
+                    <button type="submit">Se connecter</button>  
+                </form>
             </div>
         </div>
     </div>
@@ -179,15 +178,17 @@
     <script>
     document.getElementById('admin-login-form').addEventListener('submit', function(e) {
         e.preventDefault();
+        const nom = document.getElementById('nom').value; // Ajout de cette ligne pour définir la variable 'nom'
         const password = document.getElementById('password').value;
 
-        if (password === '@elite00') {
+        if (nom === 'Caleb LeBon AM' && password === '@elite00') {
             // Redirection vers le panneau d'administration
             window.location.href = 'admin.php';
         } else {
-            alert('Mot de passe incorrect. Veuillez réessayer.');
+            alert('Le nom ou le mot de passe est incorrect. Veuillez réessayer.');
         }
     });
     </script>
 </body>
+
 </html>

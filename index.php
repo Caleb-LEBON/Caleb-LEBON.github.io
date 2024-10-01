@@ -145,7 +145,7 @@
         <nav>
         <ul>  
             <li><a href="index.php"><i class="fas fa-home"></i> Accueil</a></li>  
-            <li><a href="Adds/connexion_admin.php"><i class="fas fa-user-shield"></i> Admin</a></li>  
+            <li><a href="connexion_admin.php"><i class="fas fa-user-shield"></i> Admin</a></li>  
         </ul>
 
         </nav>
@@ -179,13 +179,13 @@
                         <i class="fas fa-clock"></i> Informations en temps réel<br>
                         <i class="fas fa-mobile-alt"></i> Compatible multi-plateformes<br>
                         <br>
-                        <a href="Adds/main.php" class="signup-button">Consultez la météo</a>
+                        <a href="main.php" class="signup-button">Consultez la météo</a>
                     </p>
                 </div>
                 <div class="signup-section">
                     <br><br>
                     <h2>Inscrivez-vous maintenant</h2>
-                    <form class="signup-form" action="BD/submit.php" method="post">  
+                    <form class="signup-form" action="submit.php" method="post">  
                         <input type="text" name="nom" placeholder="Nom" required>  
                         <input type="tel" name="telephone" placeholder="Numéro de téléphone" required>  
                         <button type="submit" class="signup-button">S'inscrire</button>  
@@ -195,4 +195,39 @@
         </div>
     </div>
 </body>
+<script>
+    document.getElementById('admin-login-form').addEventListener('submit', function(e) {  
+    e.preventDefault();  
+    const nom = document.getElementById('nom').value;  
+    const telephone = document.getElementById('telephone').value;  
+
+    // Fonction pour valider le numéro de téléphone  
+    function validerNumeroRDC(telephone) {  
+        return /^(\+243\d{9}|0\d{9})$/.test(telephone);  
+    }  
+
+    if (validerNumeroRDC(telephone)) {  
+        // Vérifier si le numéro de téléphone existe déjà via une requête AJAX  
+        fetch('check_phone.php', {  
+            method: 'POST',  
+            headers: {  
+                'Content-Type': 'application/x-www-form-urlencoded'  
+            },  
+            body: `telephone=${telephone}`  
+        })  
+        .then(response => response.json())  
+        .then(data => {  
+            if (data.exists) {  
+                alert('Le numéro de téléphone existe déjà.');  
+            } else {  
+                // Soumettre le formulaire si le numéro n'existe pas  
+                document.getElementById('admin-login-form').submit();  
+            }  
+        })  
+        .catch(error => console.error('Erreur:', error));  
+    } else {  
+        alert('Le numéro de téléphone n\'est pas valide. Veuillez entrer un numéro de la RDC.');  
+    }  
+});
+</script>
 </html>

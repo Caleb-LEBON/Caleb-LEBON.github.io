@@ -1,4 +1,6 @@
-<html><head>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>UBAlerts - Compte Créé avec Succès</title>
@@ -65,13 +67,14 @@
 </head>
 <body>
   <div class="container">
-    <svg class="icon" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+    <svg class="icon" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg" aria-labelledby="checkmarkTitle">
+      <title id="checkmarkTitle">Icône de validation</title>
       <circle cx="26" cy="26" r="25" fill="none" stroke="#3498db" stroke-width="2"/>
       <path class="checkmark" fill="none" stroke="#3498db" stroke-width="2" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
     </svg>
     <h1>Merci de nous faire confiance !</h1>
     <p>Votre compte UBAlerts a été créé avec succès. Nous sommes ravis de vous compter parmi nos utilisateurs.</p>
-    <a href="../main.php" class="btn">Consultez la météo</a>
+    <a href="main.php" class="btn">Consultez la météo</a>
   </div>
 
   <script>
@@ -87,4 +90,5 @@
       });
     });
   </script>
-</body></html>
+</body>
+</html>

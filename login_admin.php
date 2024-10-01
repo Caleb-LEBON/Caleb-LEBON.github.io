@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Vérifiez le mot de passe  
     if ($inputPassword === $adminPasswordFromDB) {  
         // Rediriger vers le panneau d'administration  
-        header("Location: admin.php"); // Changez ceci vers l'URL de votre interface admin  
+        header("Location:admin.php"); // Changez ceci vers l'URL de votre interface admin  
         exit();  
     } else {  
         // Mot de passe incorrect, redirigez avec un message d'erreur  
