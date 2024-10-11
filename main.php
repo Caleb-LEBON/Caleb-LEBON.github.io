@@ -173,8 +173,8 @@
         UBAlerts
       </a>
       <ul>
-        <li><a href="index.php">Accueil</a></li>
-        <li><a href="index.php" id="createAccountLink">Créer un compte</a></li>
+        <li><a href="home.php">Accueil</a></li>
+        <li><a href="home.php" id="createAccountLink">Créer un compte</a></li>
         <li><a href="connexion_admin.php" id="adminLink">Admin</a></li>
       </ul>
     </nav>

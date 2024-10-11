@@ -7,12 +7,15 @@ $dbname = "ubalerts";
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    die("Échec de la connexion : " . $conn->connect_error);
 }
 
-// Requête SQL pour récupérer les administrateurs
-$sql = "SELECT id, nom, email FROM admins";
+$sql = "SELECT id, nom, numero, mot_de_passe FROM admin";
 $result = $conn->query($sql);
+
+if (!$result) {
+    die("Erreur lors de l'exécution de la requête : " . $conn->error);
+}
 
 $admins = array();
 
@@ -28,7 +31,4 @@ if ($result->num_rows > 0) {
 echo json_encode($admins);
 
 $conn->close();
-?>
-
-$conn->close();  
 ?>

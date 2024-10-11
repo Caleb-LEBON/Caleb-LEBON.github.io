@@ -133,7 +133,7 @@
     <div id="app">
         <nav>
             <ul>
-                <li><a href="index.php"><i class="fas fa-home"></i> Accueil</a></li>
+                <li><a href="home.php"><i class="fas fa-home"></i> Accueil</a></li>
             </ul>
         </nav>
 

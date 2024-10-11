@@ -11,7 +11,7 @@ if ($conn->connect_error) {
 }
 
 // Requête SQL pour récupérer les utilisateurs
-$sql = "SELECT id, nom, email FROM utilisateurs";
+$sql = "SELECT id, nom, telephone FROM utilisateurs";
 $result = $conn->query($sql);
 
 $utilisateurs = array();
