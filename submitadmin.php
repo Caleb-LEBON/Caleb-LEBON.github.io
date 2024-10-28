@@ -11,57 +11,56 @@ $dbname = "ubalerts"; // Assurez-vous que le nom de la base de données est corr
 $conn = new mysqli($servername, $username, $password, $dbname);  
 
 // Vérifier la connexion  
-if ($conn->connect_error) {  
+if ($conn->connect_error) {      
     die("Erreur de connexion: " . $conn->connect_error);  
 }  
 
 // Vérifier si le formulaire a été soumis  
-if ($_SERVER["REQUEST_METHOD"] == "POST") {  
-    // Valider et échapper les données d'entrée  
-    $nom = $conn->real_escape_string(trim($_POST['nom']));  
+if ($_SERVER["REQUEST_METHOD"] == "POST") {      
+    // Valider et échapper les données d'entrée      
+    $nom = $conn->real_escape_string(trim($_POST['nom']));      
     $telephone = $conn->real_escape_string(trim($_POST['telephone']));  
+    $mot_de_passe = trim($_POST['mot_de_passe']); // Ne pas hasher le mot de passe
 
-    // Valider le numéro de téléphone (exemple pour les numéros de la RDC)
-    if (!preg_match("/^(\\+243|0)[0-9]{9}$/", $telephone)) {
-        $_SESSION['error_message'] = "Numéro de téléphone invalide. Veuillez entrer un numéro valide de la RDC.";
-        header("Location: home.php");
-        exit();
-    }
+    // Valider le numéro de téléphone (exemple pour les numéros de la RDC)    
+    if (!preg_match("/^(\\+243|0)[0-9]{9}$/", $telephone)) {        
+        $_SESSION['error_message'] = "Numéro de téléphone invalide. Veuillez entrer un numéro valide de la RDC.";        
+        header("Location: home.php");        
+        exit();    
+    }    
 
-    // Vérifiez d'abord si le numéro de téléphone existe déjà  
-    $phone_check_stmt = $conn->prepare("SELECT * FROM admins WHERE numero = ?");  
-    $phone_check_stmt->bind_param("s", $telephone);  
-    $phone_check_stmt->execute();  
-    $result = $phone_check_stmt->get_result();  
+    // Vérifiez d'abord si le numéro de téléphone existe déjà      
+    $phone_check_stmt = $conn->prepare("SELECT * FROM admins WHERE numero = ?");      
+    $phone_check_stmt->bind_param("s", $telephone);      
+    $phone_check_stmt->execute();      
+    $result = $phone_check_stmt->get_result();      
 
-    if ($result->num_rows > 0) {  
-        // Mettez un message d'erreur dans la session et redirigez vers le formulaire  
-        $_SESSION['error_message'] = "Impossible de créer un compte. Ce numéro de téléphone est déjà utilisé.";  
-        header("Location: home.php"); // Mettez ici le nom de votre fichier de formulaire  
-        exit();  
-    } else {  
-        // Préparer et lier  
-        $stmt = $conn->prepare("INSERT INTO admins (nom, numero, mot_de_passe) VALUES (?, ?, ?)");  
+    if ($result->num_rows > 0) {          
+        // Mettez un message d'erreur dans la session et redirigez vers le formulaire          
+        $_SESSION['error_message'] = "Impossible de créer un compte. Ce numéro de téléphone est déjà utilisé.";          
+        header("Location: home.php"); // Mettez ici le nom de votre fichier de formulaire          
+        exit();      
+    } else {          
+        // Préparer et lier          
+        $stmt = $conn->prepare("INSERT INTO admins (nom, numero, mot_de_passe) VALUES (?, ?, ?)");          
+        if ($stmt) {              
+            $stmt->bind_param("sss", $nom, $telephone, $mot_de_passe);  // Correction ici : nombre de variables              
+            // Exécuter la requête              
+            if ($stmt->execute()) {                  
+                // Rediriger vers la page de succès après l'inscription                  
+                header("Location: successadmin.php"); // Remplacez "success.php" par le chemin correct si nécessaire                  
+                exit();               
+            } else {                  
+                echo "Erreur lors de l'exécution de la requête: " . $stmt->error;              
+            }                        
+            // Fermer la déclaration              
+            $stmt->close();          
+        } else {              
+            echo "Erreur lors de la préparation de la déclaration: " . $conn->error;          
+        }      
+    }      
 
-        if ($stmt) {  
-            $stmt->bind_param("ss", $nom, $numero, $mot_de_passe);  
-
-            // Exécuter la requête  
-            if ($stmt->execute()) {  
-                // Rediriger vers la page de succès après l'inscription  
-                header("Location: successadmin.php"); // Remplacez "success.php" par le chemin correct si nécessaire  
-                exit();   
-            } else {  
-                echo "Erreur lors de l'exécution de la requête: " . $stmt->error;  
-            }
-            
-            // Fermer la déclaration  
-            $stmt->close();  
-        } else {  
-            echo "Erreur lors de la préparation de la déclaration: " . $conn->error;  
-        }  
-    }  
-    // Fermer la déclaration de vérification du numéro de téléphone  
+    // Fermer la déclaration de vérification du numéro de téléphone      
     $phone_check_stmt->close();  
 }  
 

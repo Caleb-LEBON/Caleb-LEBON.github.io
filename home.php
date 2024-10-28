@@ -188,7 +188,7 @@
                     <h2>Inscrivez-vous maintenant</h2>
                     <form class="signup-form" action="submit.php" method="post">  
                         <input type="text" name="nom" placeholder="Nom" required>  
-                        <input type="tel" name="telephone" placeholder="Numéro de téléphone" required value='0'>  
+                        <input type="tel" name="telephone" placeholder="Numéro de téléphone" required value='+243'>  
                         <button type="submit" class="signup-button">S'inscrire</button>  
                     </form>
                 </div>

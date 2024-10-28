@@ -205,8 +205,6 @@ nav a {
             <a href="ajouteradmin.php">Ajouter Administrateur</a>  
         </div>  
     </div>  
-
-
                 <h2>Utilisateurs</h2>  
                 <table>  
                     <thead>  
@@ -223,7 +221,6 @@ nav a {
                             <td>{{ user.nom }}</td>
                             <td>{{ user.telephone }}</td>  
                             <td>  
-                                <button @click="editUser(user.id)">Éditer</button>  
                                 <button @click="deleteUser(user.id)">Supprimer</button>  
                             </td>  
                         </tr>  
@@ -248,46 +245,59 @@ nav a {
                             <td>{{ admin.numero }}</td> 
                             <td>{{ admin.mot_de_passe }}</td> 
                             <td>  
-                                <button @click="editAdmin(admin.id)">Éditer</button>  
                                 <button @click="deleteAdmin(admin.id)">Supprimer</button>  
                             </td>  
                         </tr>  
                     </tbody>  
                 </table>  
 
-                <script>  
-                    new Vue({  
-                        el: '#app',  
-                        data: {  
-                            utilisateurs: <?php echo json_encode($utilisateurs); ?>,  
-                            administrateurs: <?php echo json_encode($administrateurs); ?>  
-                        },  
-                        methods: {  
-                            editUser(id) {  
-                                // Logique pour éditer un utilisateur  
-                                alert("Édition de l'utilisateur avec ID : " + id);  
-                            },  
-                            deleteUser(id) {  
-                                // Logique pour supprimer un utilisateur  
-                                if (confirm("Êtes-vous sûr de vouloir supprimer cet utilisateur ?")) {  
-                                    // Implémentez la logique de suppression ici  
-                                    alert("Utilisateur avec ID : " + id + " supprimé.");  
-                                }  
-                            },  
-                            editAdmin(id) {  
-                                // Logique pour éditer un administrateur  
-                                alert("Édition de l'administrateur avec ID : " + id);  
-                            },  
-                            deleteAdmin(id) {  
-                                // Logique pour supprimer un administrateur  
-                                if (confirm("Êtes-vous sûr de vouloir supprimer cet administrateur ?")) {  
-                                    // Implémentez la logique de suppression ici  
-                                    alert("Administrateur avec ID : " + id + " supprimé.");  
-                                }  
-                            }  
-                        }  
-                    });  
-                </script>  
+
+                <script>
+  new Vue({
+    el: '#app',
+    data: {
+      utilisateurs: <?php echo json_encode($utilisateurs); ?>,
+      administrateurs: <?php echo json_encode($administrateurs); ?>
+    },
+    methods: {
+      editUser(id) {
+        // Logique pour éditer un utilisateur
+        alert("Édition de l'utilisateur avec ID : " + id);
+      },
+      deleteUser(id) {
+        if (confirm("Êtes-vous sûr de vouloir supprimer cet utilisateur ?")) {
+          // Trouver l'index de l'utilisateur à supprimer
+          const index = this.utilisateurs.findIndex(user => user.id === id);
+          if (index !== -1) {
+            // Retirer l'utilisateur de la liste
+            this.utilisateurs.splice(index, 1);
+            alert("Utilisateur avec ID : " + id + " supprimé.");
+          } else {
+            alert("Utilisateur non trouvé.");
+          }
+        }
+      },
+      editAdmin(id) {
+        // Logique pour éditer un administrateur
+        alert("Édition de l'administrateur avec ID : " + id);
+      },
+      deleteAdmin(id) {
+        if (confirm("Êtes-vous sûr de vouloir supprimer cet administrateur ?")) {
+          // Trouver l'index de l'administrateur à supprimer
+          const index = this.administrateurs.findIndex(admin => admin.id === id);
+          if (index !== -1) {
+            // Retirer l'administrateur de la liste
+            this.administrateurs.splice(index, 1);
+            alert("Administrateur avec ID : " + id + " supprimé.");
+          } else {
+            alert("Administrateur non trouvé.");
+          }
+        }
+      }
+    }
+  });
+</script>
+
             </div>  
         </div>  
     </div>  

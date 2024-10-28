@@ -169,7 +169,7 @@
                     <h2>Ajouter l'admin Maintenant</h2>
                     <form class="signup-form" action="submitadmin.php" method="post">  
                         <input type="text" name="nom" placeholder="Nom" required>  
-                        <input type="tel" name="telephone" placeholder="Numéro de téléphone" required>  
+                        <input type="tel" name="telephone" placeholder="Numéro de téléphone" required Value="+243">  
                         <input type="password" id="password" name="password" placeholder="Mot de Passe" required>  
                         <button type="submit" class="signup-button">Inscrire</button>  
                     </form>

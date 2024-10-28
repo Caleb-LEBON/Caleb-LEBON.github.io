@@ -34,6 +34,15 @@ if (empty($recipients)) {
     exit;  
 }  
 
+// Vérifier et formater les numéros de téléphone
+foreach ($recipients as &$recipient) {  
+    if (!preg_match("/^\+243\d{9}$/", $recipient)) {  
+        echo "Numéro invalide: $recipient<br>";  
+        continue;  
+    }  
+}  
+unset($recipient); // Détruire la référence par précaution
+
 $url = 'https://api.infobip.com/sms/2/text/advanced';  
 $apiKey = '03d9dd27cbcb00bbc006a997924f6037-7d209826-7695-4750-8bb2-301659c39fbe';  
 
@@ -64,13 +73,13 @@ foreach ($recipients as $recipient) {
 
     $context = stream_context_create($options);  
     $result = file_get_contents($url, false, $context);  
-    
+
     if ($result === FALSE) {  
         // Gérer les erreurs si nécessaire  
         error_log("Erreur lors de l'envoi à $recipient");  
         echo "Erreur lors de l'envoi à $recipient<br>";  
     } else {  
-        // Traitez la réponse de l'API si besoin  
+        // Traitez la réponse de l'API  
         $response = json_decode($result, true);  
         if (isset($response['messages'][0]['status']['groupId']) && $response['messages'][0]['status']['groupId'] != 1) {  
             error_log("Erreur API: " . $response['messages'][0]['status']['description']);  
@@ -78,6 +87,10 @@ foreach ($recipients as $recipient) {
         } else {  
             echo "SMS envoyé à $recipient avec succès.<br>";  
         }  
+        // Ajoutez ceci pour inspecter la réponse complète
+        echo "<pre>";
+        print_r($response);
+        echo "</pre>";
     }  
 }  
 

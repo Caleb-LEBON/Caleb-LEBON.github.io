@@ -216,25 +216,59 @@
                    dur="15s" repeatCount="indefinite" />
         </path>
       </svg>
-      <div class="temperature">28°C</div>
+      <div class="temperature">--°C</div>
       <div class="details">
         <div class="detail-item">
           <p>Humidité</p>
-          <p>65%</p>
+          <p id="humidity">--%</p>
         </div>
         <div class="detail-item">
           <p>Vent</p>
-          <p>10 km/h</p>
+          <p id="wind">-- km/h</p>
         </div>
         <div class="detail-item">
           <p>Précipitations</p>
-          <p>0%</p>
+          <p id="precip">--%</p>
         </div>
       </div>
     </div>
   </div>
 
   <script>
+     const apiKey = '37e6401d695fbeacbf6fe9f9f78435ac';
+    const city = 'Goma';
+
+    function fetchWeather() {
+      fetch(`https://api.weatherstack.com/current?access_key=${apiKey}&query=${city}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.success === false) {
+            alert("Erreur lors de la récupération des données météo.");
+            return;
+          }
+          
+          const weatherData = data.current;
+
+          // Mise à jour des informations météo
+          document.querySelector('.temperature').textContent = weatherData.temperature + '°C';
+          document.getElementById('humidity').textContent = weatherData.humidity + '%';
+          document.getElementById('wind').textContent = weatherData.wind_speed + ' km/h';
+          document.getElementById('precip').textContent = weatherData.precip + '%';
+
+          // Mise à jour de l'icône météo
+          const weatherIcon = document.querySelector('.weather-icon');
+          weatherIcon.src = weatherData.weather_icons[0];
+          weatherIcon.alt = weatherData.weather_descriptions[0];
+        })
+        .catch(error => {
+          console.error("Erreur :", error);
+        });
+    }
+
+    // Fetch météo au chargement de la page
+    window.onload = fetchWeather;
+
+
     function openModal(modalId) {
       document.getElementById(modalId).style.display = "block";
     }
